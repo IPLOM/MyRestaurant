@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdullah Muqaibal Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            background-color: #d32f2f;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            width: 100%;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .language-selector {
+            margin: 10px 0;
+        }
+        .promo-banner, .ad-banner {
+            background-color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .menu-item {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 200px;
+            transition: transform 0.2s;
+        }
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+        .menu-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #b71c1c;
+        }
+        .order-list {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .footer {
+            background-color: #d32f2f;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .login-form {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin: 20px 0;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-form button {
+            background-color: #d32f2f;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .login-form button:hover {
+            background-color: #b71c1c;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body onload="initializePage()">
+
+<header>
+    <h1 id="restaurantName">Abdullah Muqaibal Restaurant</h1>
+    <div class="language-selector">
+        <button class="button" onclick="setLanguage('en')">English</button>
+        <button class="button" onclick="setLanguage('ar')">عربي</button>
+    </div>
+    <nav>
+        <a href="#" onclick="toggleLogin()">Login</a>
+        <a href="#">Menu</a>
+        <a href="#">Delivery</a>
+    </nav>
+</header>
+
+<div class="promo-banner">
+    <h2 id="promoHeader">30% OFF on Pickup Orders</h2>
+    <p id="promoText">Use Code: <strong>PICK30</strong></p>
+    <button class="button">Order Now</button>
+</div>
+
+<div class="ad-banner">
+    <h3 id="adHeader">New Meal Deals!</h3>
+    <p id="adText">Try our special family bucket and get a free dessert!</p>
+</div>
+
+<div class="menu">
+    <div class="menu-item">
+        <h3 id="item1Header">Bucket of Chicken</h3>
+        <img src="https://via.placeholder.com/200x150?text=Bucket+of+Chicken" alt="Bucket of Chicken">
+        <p id="item1Price">$19.99</p>
+        <button class="button" onclick="addToCart('Bucket of Chicken', 19.99)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3 id="item2Header">French Fries</h3>
+        <img src="https://via.placeholder.com/200x150?text=French+Fries" alt="French Fries">
+        <p id="item2Price">$2.99</p>
+        <button class="button" onclick="addToCart('French Fries', 2.99)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3 id="item3Header">Soft Drink</h3>
+        <img src="https://via.placeholder.com/200x150?text=Soft+Drink" alt="Soft Drink">
+        <p id="item3Price">$1.99</p>
+        <button class="button" onclick="addToCart('Soft Drink', 1.99)">Add to Cart</button>
+    </div>
+    <div class="menu-item">
+        <h3 id="item4Header">Chocolate Cake</h3>
+        <img src="https://via.placeholder.com/200x150?text=Chocolate+Cake" alt="Chocolate Cake">
+        <p id="item4Price">$4.99</p>
+        <button class="button" onclick="addToCart('Chocolate Cake', 4.99)">Add to Cart</button>
+    </div>
+</div>
+
+<div class="order-list" id="orderList">
+    <h3>Your Order</h3>
+    <ul id="cartItems"></ul>
+    <p id="totalPrice"></p>
+</div>
+
+<div class="login-form" id="loginForm">
+    <h3>Login</h3>
+    <input type="text" placeholder="Username" id="username" required>
+    <input type="password" placeholder="Password" id="password" required>
+    <button onclick="login()">Login</button>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Abdullah Muqaibal Restaurant. All Rights Reserved.</p>
+</footer>
+
+<script>
+    let cart = [];
+    let language = 'en';
+
+    function initializePage() {
+        setLanguage(language); // Set initial language
+    }
+
+    function setLanguage(lang) {
+        language = lang;
+        if (language === 'en') {
+            document.getElementById('restaurantName').textContent = 'Abdullah Muqaibal Restaurant';
+            document.getElementById('promoHeader').textContent = '30% OFF on Pickup Orders';
+            document.getElementById('promoText').textContent = 'Use Code: PICK30';
+            document.getElementById('adHeader').textContent = 'New Meal Deals!';
+            document.getElementById('adText').textContent = 'Try our special family bucket and get a free dessert!';
+            document.getElementById('item1Header').textContent = 'Bucket of Chicken';
+            document.getElementById('item1Price').textContent = '$19.99';
+            document.getElementById('item2Header').textContent = 'French Fries';
+            document.getElementById('item2Price').textContent = '$2.99';
+            document.getElementById('item3Header').textContent = 'Soft Drink';
+            document.getElementById('item3Price').textContent = '$1.99';
+            document.getElementById('item4Header').textContent = 'Chocolate Cake';
+            document.getElementById('item4Price').textContent = '$4.99';
+        } else {
+            document.getElementById('restaurantName').textContent = 'مطعم عبدالله مقيبيل';
+            document.getElementById('promoHeader').textContent = 'خصم 30% على الطلبات المأخوذة';
+            document.getElementById('promoText').textContent = 'استخدم الرمز: PICK30';
+            document.getElementById('adHeader').textContent = 'عروض الوجبات الجديدة!';
+            document.getElementById('adText').textContent = 'جرب دلو العائلة الخاص بنا واحصل على حلوى مجانية!';
+            document.getElementById('item1Header').textContent = 'دلو دجاج';
+            document.getElementById('item1Price').textContent = '19.99$';
+            document.getElementById('item2Header').textContent = 'بطاطس مقلية';
+            document.getElementById('item2Price').textContent = '2.99$';
+            document.getElementById('item3Header').textContent = 'مشروب غازي';
+            document.getElementById('item3Price').textContent = '1.99$';
+            document.getElementById('item4Header').textContent = 'كيكة الشوكولاتة';
+            document.getElementById('item4Price').textContent = '4.99$';
+        }
+    }
+
+    function addToCart(itemName, itemPrice) {
+        cart.push({ name: itemName, price: itemPrice });
+        displayCart();
+    }
+
+    function displayCart() {
+        const cartItems = document.getElementById('cartItems');
+        const totalPriceElement = document.getElementById('totalPrice');
+        
+        cartItems.innerHTML = ''; // Clear the current list
+        let totalPrice = 0;
+
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+            cartItems.appendChild(li);
+            totalPrice += item.price;
+        });
+
+        totalPriceElement.textContent = `Total: $${totalPrice.toFixed(2)}`;
+    }
+
+    function toggleLogin() {
+        const loginForm = document.getElementById('loginForm');
+        loginForm.style.display = loginForm.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function login() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Placeholder login logic
+        if (username && password) {
+            alert('Login Successful!');
+            toggleLogin();
+        } else {
+            alert('Please enter both username and password.');
+        }
+    }
+</script>
+
+</body>
+</html>
